@@ -1,0 +1,44 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./WEB-INF/templates/publicTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html">
+
+    <ui:define name="title">
+        Financial Data Directory
+    </ui:define>
+    
+    <ui:define name="content">
+        <br/>
+        <div class="panel panel-info" style="width :54%">           
+            <div class="panel-heading"><h1 class="panel-title">User Login</h1></div>
+            <br/>
+            <div class="panel-body">
+                <h:form  styleClass="container">
+                    <h:panelGroup layout="block" styleClass="form-group row">
+                            <h:panelGroup layout="block" styleClass="#{j_username.valid ? 'form-group col-xs-6' : 'form-group col-xs-3'}">
+                                <h:outputLabel class="control-label" for="j_username" value="Username"/>
+                                <h:inputText class="form-control" id="j_username" value="#{loginController.username}" required="true"/>
+                                <h:message for="j_username" style="color:red" />
+                            </h:panelGroup>
+                            <h:panelGroup layout="block" styleClass="#{j_password.valid ? 'form-group col-xs-6' : 'form-group col-xs-3'}" >
+                                <h:outputLabel class="control-label" for="j_password" value="Password"/>
+                                <h:inputSecret class="form-control" id="j_password" value="#{loginController.password}" required="true"/>
+                                <h:message for="j_password" style="color:red" />
+                            </h:panelGroup>
+                    </h:panelGroup>
+
+                    <h:panelGroup layout="block" styleClass="form-group col-xs-3 row" >
+                        <h:commandButton action="#{loginController.doLogin()}" value="Login" class="btn btn-primary"/>
+                    </h:panelGroup>
+                </h:form>
+            </div>
+        </div>
+        <h:form  styleClass="container">
+            <h:panelGroup layout="block" styleClass="form-group row">
+                <br/>
+                <div class="col-sm-1"><h:commandLink action="#{userController.doCreateEmpty(userController.user)}" value="Sign Up" class="btn btn btn-default active" role="button" /></div>
+            </h:panelGroup>
+        </h:form>
+    </ui:define>
+</ui:composition>

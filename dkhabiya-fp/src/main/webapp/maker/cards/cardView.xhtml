@@ -1,0 +1,50 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/authTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Card Details
+    </ui:define>
+
+    <ui:define name="content">
+        <h:link outcome="/maker/welcome.xhtml" value="Home" class="btn btn btn-info active" role="button"/>
+        <br/>
+        <br/>
+        <div class="panel panel-info">
+            <div class="panel-heading"><h3 class="panel-title">Card Details</h3></div>
+            <h:dataTable value="#{cardsController.cards}" 
+                    var="cards"
+                    styleClass="table table-hover table-bordered">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Card Number"/></f:facet>
+                        <h:outputText value="#{cardsController.cards.cardNo}"/>
+                    </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Card Type"/></f:facet>
+                    <h:outputText value="#{cardsController.cards.cardType}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Date Of Expiry"/></f:facet>
+                    <h:outputText value="#{cardsController.cards.cardExpiry}">
+                        <f:convertDateTime type="date" dateStyle="medium"/>
+                    </h:outputText>
+                </h:column>
+            </h:dataTable>
+        </div>
+        <br/>
+        
+        <div class="col-sm-1"><h:link value="Update" outcome="/maker/cards/cardUpdate.xhtml" styleClass="col-md-6 text-center" class="btn btn btn-success active" role="button"/></div>
+        <div class="col-sm-1"><h:link value="Delete" outcome="/maker/cards/cardDelete.xhtml" styleClass="col-md-6 text-center" class="btn btn btn-danger active" role="button"/></div>
+        <br/>
+        <br/>
+        <br/>
+        <h:form>
+            <h:commandButton action="#{loginController.doLogout()}" value="Logout" class="btn btn-warning"/>
+        </h:form>
+        <br/>
+        <br/>
+    </ui:define>
+</ui:composition>

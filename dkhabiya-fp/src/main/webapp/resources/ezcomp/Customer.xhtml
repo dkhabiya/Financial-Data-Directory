@@ -1,0 +1,212 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="customer" required="true" type="model.Customer" />
+        <cc:attribute name="details" required="true" type="model.Details" />
+        <cc:attribute name="readonly" type="java.lang.Boolean" required="false" default="true" />
+        <cc:attribute name="action" required="false" method-signature="java.lang.String action()" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <div class="panel panel-info" style="width: 68%">
+            <h:form styleClass="container form-horizontal">
+                <div class="panel-heading"><h2>Basic Information</h2></div>
+                <!--Customer Type -->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="custType" value="Customer Type *"/>
+                    <br/>
+                    <h:selectOneMenu id="custType" 
+                                     value="#{cc.attrs.customer.custType}"
+                                     required="true"
+                                     requiredMessage="Mandatory field">
+                        <f:selectItem itemValue="Individual" itemLabel="Individual"/>
+                        <f:selectItem itemValue="Corporate" itemLabel="Corporate"/>
+                        <f:selectItem itemValue="International" itemLabel="International"/>
+                        <f:selectItem itemValue="Other" itemLabel="Other"/>
+                    </h:selectOneMenu>
+                    <h:message for="custType" style="color:red" />
+                </h:panelGroup>
+                <!--Customer Title -->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="custTitle" value="Customer Title *"/>
+                    <br/>
+                    <h:selectOneMenu id="typeOfAccount" 
+                                     value="#{cc.attrs.customer.custTitle}"
+                                     required="true"
+                                     requiredMessage="Mandatory field">
+                        <f:selectItem itemValue="Mr." itemLabel="Mr."/>
+                        <f:selectItem itemValue="Miss" itemLabel="Miss"/>
+                        <f:selectItem itemValue="Mrs." itemLabel="Mrs."/>                        
+                    </h:selectOneMenu>
+                    <h:message for="custTitle" style="color:red"/>
+                </h:panelGroup>
+                <!--First Name -->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="firstName" value="First Name *"/>
+                    <h:inputText p:placeholder="First Name" 
+                                 class="form-control" 
+                                 id="firstName" 
+                                 value="#{cc.attrs.customer.firstName}"
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                                 required="true"
+                                 requiredMessage="Mandatory field"
+                                 validatorMessage="Name can contain only alphabets">
+                        <f:validateRegex pattern="^[a-zA-Z]+$"/>
+                    </h:inputText>
+                    <h:message for="firstName" style="color:red" />
+                </h:panelGroup>
+                <!--Last Name -->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="lastName" value="Last Name"/>
+                    <h:inputText p:placeholder="Last Name" 
+                                 class="form-control" 
+                                 id="lastName" 
+                                 value="#{cc.attrs.customer.lastName}"
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                                 validatorMessage="Name can contain only alphabets">
+                        <f:validateRegex pattern="^[a-zA-Z]+$"/>
+                    </h:inputText>
+                    <h:message for="lastName" style="color:red" />
+                </h:panelGroup>
+                <!--Date Of Birth -->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="dateOfBirth" value="Date Of Birth *"/>
+                    <h:inputText class="form-control" 
+                                 id="dateOfBirth" 
+                                 value="#{cc.attrs.customer.dateOfBirth}"
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                                 required="true"
+                                 requiredMessage="Mandatory field"
+                                 validatorMessage="Enter valid date">
+                        <f:convertDateTime type="date" dateStyle="short"/>
+                    </h:inputText>
+                    <h:message for="dateOfBirth" style="color:red" />
+                </h:panelGroup>
+                <br/>
+                <div class="panel-heading col-md-8"><h2>Details</h2></div>
+                <!--Driver's License -->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="driversLicence" value="Driver's License"/>
+                    <h:inputText p:placeholder="Driver's License" 
+                                 class="form-control" 
+                                 id="driversLicence" 
+                                 value="#{cc.attrs.details.driversLicence}"
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false'}"/>
+                    <h:message for="driversLicence" style="color:red" />
+                </h:panelGroup>
+                <!--State ID-->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="stateID" value="State ID"/>
+                    <h:inputText p:placeholder="State ID" 
+                                 class="form-control" 
+                                 id="stateID" 
+                                 value="#{cc.attrs.details.stateID}"
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false'}"/>
+                    <h:message for="stateID" style="color:red" />
+                </h:panelGroup>
+                <!--SSN-->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="SSN" value="SSN"/>
+                    <h:inputText p:placeholder="SSN" 
+                                 class="form-control" 
+                                 id="SSN" 
+                                 value="#{cc.attrs.details.SSN}"
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false'}"/>
+                    <h:message for="SSN" style="color:red" />
+                </h:panelGroup>
+                <!--Passport-->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="passportNumber" value="Passport Number"/>
+                    <h:inputText p:placeholder="Passport Number" 
+                                 class="form-control" 
+                                 id="passportNumber" 
+                                 value="#{cc.attrs.details.passportNumber}"
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false'}"/>
+                    <h:message for="passportNumber" style="color:red" />
+                </h:panelGroup>
+                <!--Addr 1-->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="streetLine1" value="Address Line 1 *"/>
+                    <h:inputText p:placeholder="Address Line 1" 
+                                 class="form-control" 
+                                 id="streetLine1" 
+                                 value="#{cc.attrs.details.streetLine1}"
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                                 required="true"
+                                 requiredMessage="Mandatory field"
+                                 validatorMessage="Address Mandatory"/>
+                    <h:message for="streetLine1" style="color:red" />
+                </h:panelGroup>
+                <!--Addr 2-->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="streetLine2" value="Address Line 2"/>
+                    <h:inputText p:placeholder="Address Line 2" 
+                                 class="form-control" 
+                                 id="streetLine2" 
+                                 value="#{cc.attrs.details.streetLine2}"
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false'}"/>
+                    <h:message for="streetLine2" style="color:red" />
+                </h:panelGroup>
+                <!--City-->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="city" value="City *"/>
+                    <h:inputText p:placeholder="City" 
+                                 class="form-control" 
+                                 id="city" 
+                                 value="#{cc.attrs.details.city}"
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                                 required="true"
+                                 requiredMessage="Mandatory field"
+                                 validatorMessage="City Mandatory"/>
+                    <h:message for="city" style="color:red" />
+                </h:panelGroup>
+                <!--State-->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="state" value="State *"/>
+                    <h:inputText p:placeholder="State" 
+                                 class="form-control" 
+                                 id="stater" 
+                                 value="#{cc.attrs.details.state}"
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                                 required="true"
+                                 requiredMessage="Mandatory field"
+                                 validatorMessage="State Mandatory"/>
+                    <h:message for="state" style="color:red"/>
+                </h:panelGroup>
+                <!--Zipcode-->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="zipcode" value="Zipcode *"/>
+                    <h:inputText p:placeholder="Zipcode" 
+                                 class="form-control" 
+                                 id="zipcode" 
+                                 value="#{cc.attrs.details.zipcode}"
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                                 required="true"
+                                 requiredMessage="Mandatory field"
+                                 validatorMessage="Incorrect Zipcode Format">
+                        <f:convertNumber integerOnly="true" type="number" />
+                        <f:validateLength maximum="5" minimum="5"/>
+                    </h:inputText>
+                    <h:message for="zipcode" style="color:red" />
+                </h:panelGroup>
+                <br/>
+                <ui:fragment rendered="#{not cc.attrs.readonly}">
+                    <div class="col-md-8">
+                        <h:commandButton class="btn btn-success" value="Save" action="#{cc.attrs.action}" />
+                        <br/>
+                    </div>
+                    <br/>
+                </ui:fragment>
+            </h:form>
+       </div> 
+    </cc:implementation>
+</html>

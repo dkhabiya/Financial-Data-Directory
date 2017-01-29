@@ -1,0 +1,19 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/authTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Delete Confirmation
+    </ui:define>
+
+    <ui:define name="content">
+        <h2>Are you sure?</h2>
+        <h:form>
+            <div class="col-sm-1"><h:commandLink value="Yes" action="#{accountController.doDelete(accountController.accounts)}" styleClass="col-md-2 text-center" class="btn btn btn-danger active" role="button"/></div>
+            <div class="col-sm-1"><h:commandLink value="No" action="/maker/accounts/accountView.xhtml" styleClass="col-md-2 text-center" class="btn btn btn-success active" role="button"/></div>
+        </h:form>
+    </ui:define>
+</ui:composition>

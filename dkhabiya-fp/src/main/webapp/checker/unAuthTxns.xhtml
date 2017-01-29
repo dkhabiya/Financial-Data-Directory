@@ -1,0 +1,80 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="./../WEB-INF/templates/authTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Authorised Transactions
+    </ui:define>
+
+    <ui:define name="content">
+        <h3><h:link outcome="/checker/welcome.xhtml" value="Home" class="btn btn btn-info active" role="button"/></h3>
+        <br/>
+        <h3>Customer Data</h3>
+        <h:dataTable value="#{customerService.findUnAuthTxns()}" 
+                     var="customer"
+                     styleClass="table table-hover table-striped">
+            <h:column>
+                <f:facet name="header"><h:outputText value="Customer ID"/></f:facet>
+                <h:form><h:commandLink value="#{customer.custId}" action="#{customerController.doView(customer.custId)}"/></h:form>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="Customer Name"/></f:facet>
+                <h:outputText value="#{customer.custTitle}"/>
+                <h:outputText value=" #{customer.firstName}"/>
+                <h:outputText value=" #{customer.lastName}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="Added By"/></f:facet>
+                <h:outputText value="#{customer.creatorName}"/>
+            </h:column>
+        </h:dataTable>
+        
+       <h3>Customer Accounts and Preferences</h3>
+            <h:dataTable value="#{accountsService.findUnAuthTxns()}" 
+                     var="accounts"
+                     styleClass="table table-hover table-striped">
+            <h:column>
+                <f:facet name="header"><h:outputText value="Customer ID"/></f:facet>
+                <h:outputText value="#{accounts.customer.custId}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="Account Number"/></f:facet>
+                <h:form><h:commandLink value="#{accounts.accountID}" action="#{accountController.doView(accounts.accountID)}"/></h:form>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="Account Type"/></f:facet>
+                <h:outputText value="#{accounts.typeOfAccount}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="Account Balance"/></f:facet>
+                <h:outputText value="#{accounts.balance}"/>
+            </h:column>
+        </h:dataTable>
+        
+        <h3>Cards</h3>
+        <h:dataTable value="#{cardsService.findUnAuthTxns()}" 
+                     var="cards"
+                     styleClass="table table-hover table-striped">
+            <h:column>
+                <f:facet name="header"><h:outputText value="Card Number"/></f:facet>
+                <h:form><h:commandLink value="#{cards.cardNo}" action="#{cardsController.doView(cards.cardNo)}"/></h:form>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="Account Number"/></f:facet>
+                <h:outputText value="#{cards.account.accountID}"/>
+            </h:column>
+            <h:column>
+                <f:facet name="header"><h:outputText value="Card Type"/></f:facet>
+                <h:outputText value="#{cards.cardType}"/>
+            </h:column>
+        </h:dataTable>
+        <br/>
+        <br/>
+        <h:form>
+            <h:commandButton action="#{loginController.doLogout()}" value="Logout" class="btn btn-warning"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

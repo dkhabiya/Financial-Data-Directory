@@ -1,0 +1,96 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/authTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Account Details
+    </ui:define>
+
+    <ui:define name="content">
+        <h3><h:link outcome="/checker/welcome.xhtml" value="Home" class="btn btn btn-info active" role="button"/></h3>
+        <br/>
+        <div class="panel panel-info">
+            <div class="panel-heading"><h3 class="panel-title">Account Information</h3></div>
+             <h:dataTable value="#{accountController.accounts}" 
+                    var="accounts"
+                    styleClass="table table-hover table-bordered">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Account Number"/></f:facet>
+                        <h:outputText value="#{accountController.accounts.accountID}"/>
+                    </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Account Type"/></f:facet>
+                    <h:outputText value="#{accountController.accounts.typeOfAccount}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Date Of Creation"/></f:facet>
+                    <h:outputText value="#{accountController.accounts.dateOfCreation}">
+                        <f:convertDateTime type="date" dateStyle="medium"/>
+                    </h:outputText>
+                </h:column>
+                 <h:column>
+                    <f:facet name="header"><h:outputText value="Date Modified"/></f:facet>
+                    <h:outputText value="#{accountController.accounts.dateLastModified}">
+                        <f:convertDateTime type="date" dateStyle="medium"/>
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Maker"/></f:facet>
+                    <h:outputText value="#{accountController.accounts.creatorName}"/>
+                </h:column>
+                 <h:column>
+                    <f:facet name="header"><h:outputText value="Status"/></f:facet>
+                    <h:outputText value="#{accountController.accounts.authStatus}"/>
+                </h:column>
+            </h:dataTable>
+        </div>
+        <br/>
+        <div class="panel panel-info">
+            <div class="panel-heading"><h3 class="panel-title">Account Preferences</h3></div>
+            <h:dataTable value="#{accountController.preferences}" 
+                     var="preferences"
+                     styleClass="table table-hover table-bordered">
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Account ID"/></f:facet>
+                    <h:outputText value="#{accountController.preferences.account.accountID}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Date Created"/></f:facet>
+                    <h:outputText value="#{accountController.preferences.dateOfCreation}">
+                        <f:convertDateTime type="date" dateStyle="medium"/>
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Date Modified"/></f:facet>
+                    <h:outputText value="#{accountController.preferences.dateLastModified}">
+                        <f:convertDateTime type="date" dateStyle="medium"/>
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Maker"/></f:facet>
+                    <h:outputText value="#{accountController.preferences.creatorName}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Status"/></f:facet>
+                    <h:outputText value="#{accountController.preferences.authStatus}"/>
+                </h:column>
+            </h:dataTable>
+        </div>
+        <br/>
+        <h3>
+            <h:form>
+                <h:commandLink value="Authorise" action="#{accountController.doAuth(accountController.accounts, accountController.preferences)}" class="btn btn btn-success active" role="button"/>
+            </h:form>
+        </h3>
+        <br/>
+        <br/>
+        <h:form>
+            <h:commandButton action="#{loginController.doLogout()}" value="Logout" class="btn btn-warning"/>
+        </h:form>
+        <br/>
+        <br/>
+    </ui:define>
+</ui:composition>

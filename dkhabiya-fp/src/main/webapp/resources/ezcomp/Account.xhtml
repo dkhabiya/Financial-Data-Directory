@@ -1,0 +1,113 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="accounts" required="true" type="model.Accounts" />
+        <cc:attribute name="preferences" required="true" type="model.Preferences" />
+        <cc:attribute name="readonly" type="java.lang.Boolean" required="false" default="true" />
+        <cc:attribute name="action" required="false" method-signature="java.lang.String action()" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <div class="panel panel-info" style="width: 68%">
+            <h:form styleClass="container form-horizontal">
+                <div class="panel-heading"><h2>Account Details</h2></div>
+                <!--Account Type -->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="typeOfAccount" value="Account Type *"/>
+                    <br/>
+                    <h:selectOneMenu id="typeOfAccount" 
+                                     value="#{cc.attrs.accounts.typeOfAccount}"
+                                     required="true"
+                                     requiredMessage="Mandatory field">
+                        <f:selectItem itemValue="Checkings" itemLabel="Checkings"/>
+                        <f:selectItem itemValue="Savings" itemLabel="Savings"/>
+                        <f:selectItem itemValue="Deposit" itemLabel="Deposit"/>
+                    </h:selectOneMenu>
+                    <h:message for="typeOfAccount" style="color:red" />
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="balance" value="Balance *"/>
+                    <h:inputText p:placeholder="Balance" 
+                                 class="form-control" 
+                                 id="lastName" 
+                                 value="#{cc.attrs.accounts.balance}"
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                                 required="true"
+                                 requiredMessage="Mandatory field"/>
+                    <h:message for="balance" style="color:red" />
+                </h:panelGroup>
+                <br/>
+                <div class="panel-heading col-md-8"><h2>Preferences</h2></div>
+                <!--Email Alert-->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="emailAlert" value="Email Alert"/>
+                    <h:selectOneRadio class="form-control"
+                                      id="emailAlert"
+                                      value="#{cc.attrs.preferences.emailAlert}"
+                                      readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                                      required="false">
+                        <f:selectItem itemValue="true" itemLabel="Required "/>
+                        <f:selectItem itemValue="false" itemLabel=" Not Required" />
+                    </h:selectOneRadio>
+                    <h:message for="emailAlert" style="color:red" />
+                </h:panelGroup>
+                <!--Email ID-->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="emailID" value="Email ID"/>
+                    <h:inputText p:placeholder="Email ID" 
+                                 class="form-control" 
+                                 id="emailID" 
+                                 value="#{cc.attrs.preferences.emailID}"
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                                 validatorMessage="Invalid Email">
+                        <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                    </h:inputText>
+                    <h:message for="emailID" style="color:red" />
+                </h:panelGroup>
+                <!--Phone Alert-->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="phoneAlert" value="Phone Alert"/>
+                    <h:selectOneRadio class="form-control"
+                                      id="phoneAlert"
+                                      value="#{cc.attrs.preferences.phoneAlert}"
+                                      readonly="#{cc.attrs.readonly ? 'true' : 'false'}">
+                        <f:selectItem itemValue="true" itemLabel="Required " />
+                        <f:selectItem itemValue="false" itemLabel=" Not Required" />
+                    </h:selectOneRadio>
+                    <h:message for="phoneAlert" style="color:red" />
+                </h:panelGroup>
+                <!--Phone Number-->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="phoneNumber" value="Phone Number"/>
+                    <h:inputText p:placeholder="Phone Number" 
+                                 class="form-control" 
+                                 id="phoneNumber" 
+                                 value="#{cc.attrs.preferences.phoneNumber}"
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false'}" 
+                                 validatorMessage="Incorrect Phone Number">
+                        <f:convertNumber integerOnly="true" type="number" />
+                        <f:validateLength maximum="12" minimum="10"/>
+                    </h:inputText>
+                    <h:message for="phoneNumber" style="color:red" />
+                </h:panelGroup>
+                <br/>
+                <ui:fragment rendered="#{not cc.attrs.readonly}">
+                    <div class="col-md-8">
+                        <h:commandButton class="btn btn-success" value="Save" action="#{cc.attrs.action}" />
+                        <br/>
+                    </div>
+                </ui:fragment>
+                
+            </h:form>
+       </div> 
+    </cc:implementation>
+</html>

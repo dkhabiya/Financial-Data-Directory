@@ -1,0 +1,104 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/authTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Customer Details
+    </ui:define>
+
+    <ui:define name="content">
+        <h3><h:link outcome="/maker/welcome.xhtml" value="Home" class="btn btn btn-info active" role="button"/></h3>
+        <br/>
+        <br/>
+        <div class="panel panel-info">
+            <div class="panel-heading"><h3 class="panel-title">Basic Information</h3></div>
+                <h:dataTable value="#{customerController.customer}" 
+                    var="customer"
+                    styleClass="table table-hover table-bordered">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Customer ID"/></f:facet>
+                        <h:outputText value="#{customer.custId}"/>
+                    </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Name"/></f:facet>
+                    <h:outputText value="#{customer.custTitle}"/>
+                    <h:outputText value=" #{customer.firstName}"/>
+                    <h:outputText value=" #{customer.lastName}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Date Of Birth"/></f:facet>
+                    <h:outputText value="#{customer.dateOfBirth}">
+                        <f:convertDateTime type="date" dateStyle="medium"/>
+                    </h:outputText>
+                </h:column>
+            </h:dataTable>
+        </div>
+        <br/>
+        <div class="panel panel-info">
+            <div class="panel-heading"><h3 class="panel-title">Customer Details</h3></div>
+            <h:dataTable value="#{customerController.details}" 
+                     var="details"
+                     styleClass="table table-hover table-bordered">
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Driver's License"/></f:facet>
+                    <h:outputText value="#{details.driversLicence}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="SSN"/></f:facet>
+                    <h:outputText value="#{details.SSN}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Passport Number"/></f:facet>
+                    <h:outputText value="#{details.passportNumber}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Street Address 1"/></f:facet>
+                    <h:outputText value="#{details.streetLine1}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Street Address 2"/></f:facet>
+                    <h:outputText value="#{details.streetLine2}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="State"/></f:facet>
+                    <h:outputText value="#{details.state}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Zipcode"/></f:facet>
+                    <h:outputText value="#{details.zipcode}"/>
+                </h:column>
+            </h:dataTable>
+        </div>
+        
+        <div class="col-sm-1"><h:link value="Update" outcome="/maker/customer/customerUpdate.xhtml" styleClass="col-md-6 text-center" class="btn btn btn-success active" role="button"/></div>
+        <div class="col-sm-1"><h:link value="Delete" outcome="/maker/customer/customerDelete.xhtml" styleClass="col-md-6 text-center" class="btn btn btn-danger active" role="button"/></div>
+        <br/>
+        <br/>
+        <br/>
+        <div class="panel panel-info">
+            <div class="panel-heading"><h3 class="panel-title">Account Information</h3></div>
+            <h:dataTable value="#{customerController.accounts}" 
+                     var="accounts"
+                     styleClass="table table-hover table-bordered">
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Account Number"/></f:facet>
+                    <h:form><h:commandLink value="#{accounts.accountID}" action="#{accountController.doView(accounts.accountID)}"/></h:form>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Account Type"/></f:facet>
+                    <h:outputText value="#{accounts.typeOfAccount}"/>
+                </h:column>
+            </h:dataTable>
+        </div>
+        <h5>*Click on Account ID to view individual account details.</h5>
+        <br/>
+        <h:form><h4><h:commandLink action="#{accountController.doCreateEmpty(customerController.customer)}" value="Create Account" class="btn btn btn-success active" role="button" /></h4></h:form>
+        <br/>
+        <h:form>
+            <h:commandButton action="#{loginController.doLogout()}" value="Logout" class="btn btn-warning"/>
+        </h:form>
+    </ui:define>
+</ui:composition>

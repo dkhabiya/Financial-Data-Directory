@@ -1,0 +1,78 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:cc="http://xmlns.jcp.org/jsf/composite"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://xmlns.jcp.org/jsf/passthrough"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <!-- INTERFACE -->
+    <cc:interface>
+        <cc:attribute name="user" required="true" type="model.security.User"/>
+        <cc:attribute name="role" required="true" type="model.security.Role"/>
+        <cc:attribute name="readonly" type="java.lang.Boolean" required="false" default="true" />
+        <cc:attribute name="action" required="false" method-signature="java.lang.String action()" />
+    </cc:interface>
+
+    <!-- IMPLEMENTATION -->
+    <cc:implementation>
+        <div class="panel panel-info" style="width: 68%">
+            <h:form styleClass="container form-horizontal">
+                <div class="panel-heading"><h2>User Sign Up</h2></div>
+                <!--Account Type -->
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="roleName" value="Role"/>
+                    <br/>
+                    <h:selectOneMenu id="roleName" 
+                                     value="#{cc.attrs.role.roleName}"
+                                     required="true">
+                        <f:selectItem itemValue="MAKER" itemLabel="Maker"/>
+                        <f:selectItem itemValue="CHECKER" itemLabel="Checker"/>
+                    </h:selectOneMenu>
+                    <h:message for="roleName" style="color:red" />
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="name" value="Full Name"/>
+                    <h:inputText p:placeholder="Full Name" 
+                                 class="form-control" 
+                                 id="name" 
+                                 value="#{cc.attrs.user.name}"
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                                 required="true"
+                                 validatorMessage="Please enter full name of user"/>
+                    <h:message for="name" style="color:red" />
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="userName" value="User Name"/>
+                    <h:inputText p:placeholder="User Name" 
+                                 class="form-control" 
+                                 id="userName"
+                                 value="#{cc.attrs.user.userName}"
+                                 readonly="#{cc.attrs.readonly ? 'true' : 'false'}"
+                                 required="true"
+                                 validatorMessage="Required"/>
+                    <h:message for="userName" style="color:red" />
+                </h:panelGroup>
+                <h:panelGroup layout="block" class="form-group col-md-8">
+                    <h:outputLabel for="password" value="Password"/>
+                    <h:inputSecret p:placeholder="Password" 
+                                 class="form-control" 
+                                 id="password" 
+                                 value="#{cc.attrs.user.password}"
+                                 required="true"
+                                 validatorMessage="Password Required"/>
+                    <h:message for="password" style="color:red" />
+                </h:panelGroup>
+                <br/>
+                <ui:fragment rendered="#{not cc.attrs.readonly}">
+                    <div class="col-md-8">
+                        <h:commandButton class="btn btn-success" value="Save" action="#{cc.attrs.action}" />
+                        <br/>
+                    </div>
+                </ui:fragment>
+            </h:form>
+            <br/>
+       </div> 
+    </cc:implementation>
+</html>

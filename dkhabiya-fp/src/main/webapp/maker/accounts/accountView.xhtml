@@ -1,0 +1,101 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+                template="/WEB-INF/templates/authTemplate.xhtml"
+                xmlns:h="http://xmlns.jcp.org/jsf/html"
+                xmlns:f="http://xmlns.jcp.org/jsf/core">
+
+    <ui:define name="title">
+        Account Details
+    </ui:define>
+
+    <ui:define name="content">
+        <h3><h:link outcome="/maker/welcome.xhtml" value="Home" class="btn btn btn-info active" role="button"/></h3>
+        <br/>
+        <br/>
+        <div class="panel panel-info">
+            <div class="panel-heading"><h3 class="panel-title">Account Information</h3></div>
+            <h:dataTable value="#{accountController.accounts}" 
+                    var="accounts"
+                    styleClass="table table-hover table-bordered">
+                    <h:column>
+                        <f:facet name="header"><h:outputText value="Account Number"/></f:facet>
+                        <h:outputText value="#{accountController.accounts.accountID}"/>
+                    </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Account Type"/></f:facet>
+                    <h:outputText value="#{accountController.accounts.typeOfAccount}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Date Of Creation"/></f:facet>
+                    <h:outputText value="#{accountController.accounts.dateOfCreation}">
+                        <f:convertDateTime type="date" dateStyle="medium"/>
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Account Balance"/></f:facet>
+                    <h:outputText value="#{accountController.accounts.balance}"/>
+                </h:column>
+            </h:dataTable>
+        </div>
+        <br/>
+        <div class="panel panel-info">
+            <div class="panel-heading"><h3 class="panel-title">Account Preferences</h3></div>
+            <h:dataTable value="#{accountController.preferences}" 
+                     var="preferences"
+                     styleClass="table table-hover table-bordered">
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Date Created"/></f:facet>
+                    <h:outputText value="#{accountController.preferences.dateOfCreation}">
+                        <f:convertDateTime type="date" dateStyle="medium"/>
+                    </h:outputText>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Email Alert"/></f:facet>
+                    <h:outputText value="#{accountController.preferences.emailAlert}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Email ID"/></f:facet>
+                    <h:outputText value="#{accountController.preferences.emailID}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Phone Alert"/></f:facet>
+                    <h:outputText value="#{accountController.preferences.phoneAlert}"/>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Phone Number"/></f:facet>
+                    <h:outputText value="#{accountController.preferences.phoneNumber}"/>
+                </h:column>
+            </h:dataTable>
+        </div>
+        
+        <div class="col-sm-1"><h:link value="Update" outcome="/maker/accounts/accountUpdate.xhtml" styleClass="col-md-6 text-center" class="btn btn btn-success active" role="button"/></div>
+        <div class="col-sm-1"><h:link value="Delete" outcome="/maker/accounts/accountDelete.xhtml" styleClass="col-md-6 text-center" class="btn btn btn-danger active" role="button"/></div>
+        <br/>
+        <br/>
+        <br/>
+        <div class="panel panel-info">
+            <div class="panel-heading"><h3 class="panel-title">Cards</h3></div>
+            <h:dataTable value="#{accountController.cards}" 
+                     var="cards"
+                     styleClass="table table-hover table-bordered">
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Card Number"/></f:facet>
+                    <h:form>
+                        <h:commandLink value="#{cards.cardNo}" action="#{cardsController.doView(cards.cardNo)}"/>
+                    </h:form>
+                </h:column>
+                <h:column>
+                    <f:facet name="header"><h:outputText value="Card Type"/></f:facet>
+                    <h:outputText value="#{cards.cardType}"/>
+                </h:column>
+            </h:dataTable>
+        </div>
+        <h5>*Click on Card Number to view individual card details.</h5>
+        <br/>
+        <h:form><h4><h:commandLink action="#{cardsController.doCreateEmpty(accountController.accounts)}" value="Issue New Card" class="btn btn btn-success active" role="button"/></h4></h:form>
+        <h:form>
+            <h:commandButton action="#{loginController.doLogout()}" value="Logout" class="btn btn-warning"/>
+        </h:form>
+    </ui:define>
+</ui:composition>
