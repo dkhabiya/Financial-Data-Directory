@@ -1,0 +1,2 @@
+# Financial-Data-Directory
+Financial Data Directory – a banking solution application. This basis of this application is to manage customers and their accounts in a bank. It will allow the bank personnel to create new customers and accounts, set preferences for the customer and maintain credit/debit card details of the customer. Every customer will have a unique customer ID which will be used to form relationships with the other entities in the application.
